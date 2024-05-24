@@ -1,9 +1,14 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
 import axios from "axios";
+import { useAuth } from "../context/AuthProvider";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 
 function Login() {
+  const [authUser, setAuthUser] = useAuth();
+
 
   const {
     register,
@@ -18,7 +23,7 @@ function Login() {
     };
     // console.log(userInfo);
     axios
-      .post("http://localhost:3000/user/login", userInfo)
+      .post("/api/user/login", userInfo)
       .then((response) => {
         if (response.data) {
           toast.success("Login successful");
@@ -41,7 +46,7 @@ function Login() {
 
         <h1 className='text-2xl text-center'>
             Chat<span className='text-green-500 font-semibold'>App</span></h1>
-        <h2 className='text-xl text-white font-bold'>Login</h2>
+        <h2 className='text-xl text-green font-bold'>Login</h2>
         <br />
        
 
@@ -69,7 +74,7 @@ function Login() {
 
 <div className='flex justify-between'>
     <p>New User?
-        <span className='text-blue-500 underline cursor-pointer ml-1'>SignUp</span></p>
+        <Link to="/signup" className='text-blue-500 underline cursor-pointer ml-1'>SignUp</Link></p>
     <input type="submit" value="Login" className='text-white bg-green-500 px-2 py-1 cursor-pointer rounded-lg'/>
 </div>
 

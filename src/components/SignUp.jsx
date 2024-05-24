@@ -1,8 +1,11 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
 import axios from "axios";
+import { useAuth } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 function SignUp() {
+  const [authUser, setAuthUser] = useAuth();
     const {
         register,
         handleSubmit,
@@ -18,7 +21,7 @@ function SignUp() {
         return value === password || "Password do not match"
       }
     
-      const onSubmit = (data) => {
+      const onSubmit = async(data) => {
         const userInfo={
             fullname: data.fullname,
             email: data.email,
@@ -27,8 +30,8 @@ function SignUp() {
         };
         // console.log(userInfo);
 
-        axios
-        .post("http://localhost:3000/user/signup",userInfo)
+        await axios
+        .post("/api/user/signup",userInfo)
         .then((response) => {
             
             if(response.data){
@@ -37,6 +40,7 @@ function SignUp() {
 
             }
             localStorage.setItem("ChatApp", JSON.stringify(response.data));
+            setAuthUser(response.data);
             
 
         })
@@ -108,7 +112,7 @@ function SignUp() {
 
 <div className='flex justify-between'>
     <p>Have an account?
-        <span className='text-blue-500 underline cursor-pointer ml-1'>Login</span></p>
+        <Link to="/login" className='text-blue-500 underline cursor-pointer ml-1'>Login</Link></p>
     <input type="submit" value="SignUp" className='text-white bg-green-500 px-2 py-1 cursor-pointer rounded-lg'/>
 </div>
 
