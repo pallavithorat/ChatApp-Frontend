@@ -36,7 +36,7 @@ function SignUp() {
             
             if(response.data){
 
-                alert("SignUp Successful")
+                toast.success("SignUp Successful")
 
             }
             localStorage.setItem("ChatApp", JSON.stringify(response.data));
@@ -47,7 +47,7 @@ function SignUp() {
         .catch((error)=>{
 
             if(error.response){
-                alert("Error: "+error.response.data.error)
+                toast.error("Error: "+error.response.data.error)
             }
             
             //alert("SignUp Failed: " + (error.response?.data?.message || error.message));
